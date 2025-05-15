@@ -1,13 +1,23 @@
 // 'use client';
-import {notFound} from "next/navigation"
+import { get } from "http";
+import {notFound,redirect} from "next/navigation"
 // import { usePathname } from "next/navigation"; 
+
+function getRandomInt(max:number){
+    return Math.floor(Math.random() * max);
+}
 
 export default async function ProductReview({
     params
 }:{params:Promise<{productsId:string;reviewId:string}>}){
+    const random=getRandomInt(2); 
+    if(random===1){
+        throw new Error("random is 1");
+    }
     const {productsId,reviewId} = await params
     if(parseInt(reviewId)>1000){
-        notFound();
+        // notFound();
+        redirect("/");
     }
     return <h1>Review {reviewId} for product {productsId}</h1>
 }
